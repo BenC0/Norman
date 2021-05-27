@@ -17,7 +17,7 @@ Vanilla JS, no/minimal dependencies
 1. ~~Polling~~
 2. ~~Debounce~~
 3. Element management
-4. Custom logging
+4. ~~Test specific logging~~
 5. ~~Cookie management~~
 6. ~~Get highest z-index on page~~
 7. ~~Element is in viewport~~
