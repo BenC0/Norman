@@ -1,4 +1,4 @@
-module.exports = (testID, variant, extraDetails) => {
+function registerTest(testID, variant, extraDetails) {
 	window.norman = window.norman || {
 		isPDP: isPDP(),
 		isPLP: isPLP(),
@@ -14,3 +14,5 @@ module.exports = (testID, variant, extraDetails) => {
 		window.norman[testID][property] = extraDetails[property]
 	}
 }
+
+module.exports = registerTest
