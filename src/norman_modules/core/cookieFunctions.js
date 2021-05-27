@@ -39,5 +39,5 @@ function exists(cookieName = false) {
 module.exports = {
 	set,
 	get,
-	check,
+	exists,
 }
