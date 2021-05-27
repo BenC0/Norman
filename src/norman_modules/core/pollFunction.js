@@ -5,7 +5,7 @@
  * @param {number} pollInterval - time interval between polls
  * @param {number} pollLimit - how many times to poll before giving up
  */
-export default function pollFunction(
+function poll(
     tfn,
     cb,
     pollInterval = 5,
@@ -28,3 +28,5 @@ export default function pollFunction(
     };
     timeout();
 }
+
+module.exports = poll

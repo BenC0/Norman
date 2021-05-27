@@ -15,11 +15,13 @@ Vanilla JS, no/minimal dependencies
 
 ## TODO: Core Functions
 1. ~~Polling~~
-2. ~~Debounce~~
-3. Element management
-4. ~~Test specific logging~~
-5. ~~Cookie management~~
-6. ~~Get highest z-index on page~~
-7. ~~Element is in viewport~~
-8. ~~On mouse leave~~
-9. ~~Watch element for change~~
+2. Element management
+3. ~~Test specific logging~~
+4. ~~Cookie management~~
+
+## Utility Functions
+1. ~~Debounce~~
+2. ~~Get highest z-index on page~~
+3. ~~Element is in viewport~~
+4. ~~On mouse leave~~
+5. ~~Watch element for change~~

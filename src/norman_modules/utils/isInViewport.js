@@ -1,4 +1,4 @@
-export function isInViewport(elem) {
+function isInViewport(elem) {
 	let bounding = elem.getBoundingClientRect();
 	let headerHeight = document.querySelector('header').getBoundingClientRect().height
 	return (
@@ -9,4 +9,4 @@ export function isInViewport(elem) {
 	);
 }
 
-export default isInViewport
+module.exports = isInViewport
