@@ -8,17 +8,18 @@
 - **GTM**: Google Tag Manager
 
 ## Aim/Purpose
-N will act as a facilitator for optmisation activity, working in tandem with the DOM and 3rd party tools.
+N will act as a facilitator for optmisation activity.
 
 ## Codebase
 Vanilla JS, no/minimal dependencies
 
-## Core Functions
-1. Polling
-2. Debounce
-3. Event Tracking (GA, GTM, etc.)
-4. Element Management
-5. Custom logging
-6. Cookie Management
-7. Local Storage Management
-8. Session Storage Management
+## TODO: Core Functions
+1. ~~Polling~~
+2. ~~Debounce~~
+3. Element management
+4. Custom logging
+5. ~~Cookie management~~
+6. ~~Get highest z-index on page~~
+7. ~~Element is in viewport~~
+8. ~~On mouse leave~~
+9. ~~Watch element for change~~

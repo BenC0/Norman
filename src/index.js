@@ -1,54 +1,17 @@
-const testConfig = {
-	id: "XYZ",
-	code_version: "1.0.0",
+const log = require('./norman_modules/log.js');
+const debounce = require('./norman_modules/debounce.js');
+const registerTest = require('./norman_modules/registerTest.js');
+const cookieFunctions = require('./norman_modules/cookieFunctions.js');
+const getHighestZIndex = require('./norman_modules/getHighestZIndex.js');
+const watchForChange = require('./norman_modules/watchForChange.js');
+
+const norman = {
+	log,
+	debounce,
+	cookie,
+	registerTest,
+	watchForChange,
 }
 
-function isPDP() {
-	return !!window.pageType && window.pageType === "PDP"
-}
-
-function isPLP() {
-	return !!window.pageType && window.pageType === "PLP"
-}
-
-function isHome() {
-	return !!window.pageType && window.pageType === "Homepage"
-}
-
-function pageType() {
-	return !!window.pageType ? window.pageType : false
-}
-
-function log(msg) {
-	let date = new Date
-	window.peabody[testConfig.id].logs.push({
-		"msg": msg,
-		"id": `${testConfig.id}:${window.peabody[testConfig.id].logs.length}`,
-		"time": date.toTimeString(),
-		"date": date.toDateString(),
-		"code_version": testConfig.code_version
-	})
-}
-
-function registerTest(variant, extraDetails) {
-	window.peabody = window.peabody || {
-		isPDP: isPDP(),
-		isPLP: isPLP(),
-		isHome: isHome(),
-		pageType: pageType(),
-	}
-	window.peabody[testConfig.id] =  {
-		logs: [],
-		variant,
-		testConfig,
-	}
-	for (const property in extraDetails) {
-		window.peabody[testConfig.id][property] = extraDetails[property]
-	}
-}
-
-const peabody = {
-	log: log,
-	registerTest: registerTest,
-}
+module.exports = norman
 
