@@ -1,11 +1,11 @@
 # Norman - Objective Optimisation
 
 ## Acronyms & Abbreviations
-N: Norman
-DL: Data Layer
-CRO: Conversion Rate Optimisation
-GA: Google Analytics
-GTM: Google Tag Manager
+- N: Norman
+- DL: Data Layer
+- CRO: Conversion Rate Optimisation
+- GA: Google Analytics
+- GTM: Google Tag Manager
 
 ## Aim/Purpose
 N will act as a facilitator for optmisation activity, working in tandem with the DOM and 3rd party tools.
