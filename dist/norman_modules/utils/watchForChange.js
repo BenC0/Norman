@@ -1,5 +1,10 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = watchForChange;
+
 function watchForChange() {
   var targetNode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function (mutationsList, observer) {
@@ -19,5 +24,3 @@ function watchForChange() {
     }
   }
 }
-
-module.exports = watchForChange;

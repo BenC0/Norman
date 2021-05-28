@@ -1,5 +1,13 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.set = set;
+exports.get = get;
+exports.exists = exists;
+exports["default"] = void 0;
+
 /* Function to set a cookie. Default expiration date is 30 days. */
 function set(cname, cvalue) {
   var exdays = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 30;
@@ -51,8 +59,9 @@ function exists() {
   return false;
 }
 
-module.exports = {
+var _default = {
   set: set,
   get: get,
   exists: exists
 };
+exports["default"] = _default;

@@ -1,5 +1,10 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = log;
+
 function log(testID, msg) {
   var date = new Date();
   window.norman[testID].logs.push({
@@ -9,5 +14,3 @@ function log(testID, msg) {
     "date": date.toDateString()
   });
 }
-
-module.exports = log;

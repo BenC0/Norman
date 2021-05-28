@@ -1,2 +1,3 @@
-const norman = require('../dist/index.js')
-console.log({norman})
+const norman = require('../dist/index')
+
+console.log(norman)

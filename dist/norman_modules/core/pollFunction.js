@@ -1,5 +1,10 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = poll;
+
 /**
  * Poll for the truthyness of a function and run callback when true
  * @param {function} tfn - function to run to test - must return a boolean
@@ -28,5 +33,3 @@ function poll(tfn, cb) {
 
   timeout();
 }
-
-module.exports = poll;

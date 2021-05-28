@@ -4,7 +4,7 @@
   "description": "Optimisation Development Toolkit",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "node ./tests/test.js",
+    "test": "npm run build & node ./tests/test.js",
     "build": "babel src -d dist"
   },
   "repository": {

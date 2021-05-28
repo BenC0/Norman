@@ -1,5 +1,10 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = onMouseLeave;
+
 /**
  * Function to initialise the mouse leave detection function.
  * @param {function} callback - The function to run when the conditions have returned true
@@ -42,5 +47,3 @@ function onMouseLeave(callback) {
     select[i].addEventListener("blur", listenerController("add"), false);
   }
 }
-
-module.exports = onMouseLeave;

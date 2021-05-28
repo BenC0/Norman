@@ -1,5 +1,10 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = registerTest;
+
 function registerTest(testID, variant, extraDetails) {
   window.norman = window.norman || {
     isPDP: isPDP(),
@@ -17,5 +22,3 @@ function registerTest(testID, variant, extraDetails) {
     window.norman[testID][property] = extraDetails[property];
   }
 }
-
-module.exports = registerTest;
