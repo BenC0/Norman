@@ -21,13 +21,14 @@ Functionality should be modular to allow the developer to use only what they nee
 5. Watch element for change
 
 ### TODO
-1. Implement Testing (Jest)
-2. Implement Element Management
+1. Implement bundling
+2. Implement testing (Jest)
+3. Implement element management
 - Create functions for get, check, add, remove
 - Create element management system
-3. Implement Test configuration
+4. Implement test configuration
 - Test ID
 - Variant
 - Code version
-4. Document all functions
-5. Document recommended usage
+5. Document all functions
+6. Document recommended usage
