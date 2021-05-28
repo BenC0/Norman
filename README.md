@@ -1,4 +1,6 @@
-# Norman - Objective Optimisation
+# Norman - An Optimisation Development Toolkit
+
+**Please note:** This is under active development and is likely to contain many bugs.
 
 ## Acronyms & Abbreviations
 - **N**: Norman
