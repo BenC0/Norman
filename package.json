@@ -4,9 +4,7 @@
   "description": "Optimisation Development Toolkit",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "npm run build & node ./tests/test.js",
-    "build": "webpack",
-    "watch": "webpack --watch"
+    "test": "node ./tests/test.js"
   },
   "repository": {
     "type": "git",
@@ -22,14 +20,5 @@
   "bugs": {
     "url": "https://github.com/BenC0/Norman/issues"
   },
-  "homepage": "https://github.com/BenC0/Norman#readme",
-  "devDependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/preset-env": "^7.14.2",
-    "babel-loader": "^8.2.2",
-    "clean-webpack-plugin": "^4.0.0-alpha.0",
-    "terser-webpack-plugin": "^5.1.2",
-    "webpack": "^5.38.1",
-    "webpack-cli": "^4.7.0"
-  }
+  "homepage": "https://github.com/BenC0/Norman#readme"
 }
