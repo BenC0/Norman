@@ -15,15 +15,7 @@ const config = {
 	},
 	mode: 'production',
 	optimization: {
-		minimize: true,
-		minimizer: [
-			new TerserPlugin({
-				terserOptions: {
-					keep_classnames: true,
-					keep_fnames: true
-				}
-			})
-		]
+		minimize: false
 	},
 	devtool: false,
 	module: {
