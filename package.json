@@ -2,7 +2,7 @@
   "name": "norman-cro",
   "version": "1.0.6",
   "description": "Optimisation Development Toolkit",
-  "main": "./src/index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "test": "node ./src/test.js"
   },
