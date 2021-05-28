@@ -20,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/BenC0/Norman/issues"
   },
-  "homepage": "https://github.com/BenC0/Norman#readme"
+  "homepage": "https://github.com/BenC0/Norman#readme",
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
+    "babel-loader": "^8.2.2"
+  }
 }
