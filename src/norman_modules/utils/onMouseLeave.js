@@ -3,7 +3,7 @@
  * @param {function} callback - The function to run when the conditions have returned true
  * @param {number}  [threshold=5] - Threshold set for mouse y position
 */
-function onMouseLeave(callback, threshold = 5) {
+export default function onMouseLeave(callback, threshold = 5) {
     /* declare conditionCheck function as variable and pass the event to the function */
     var conditionCheck = function conditionCheck(event) {
             /* check if mouse y position is less than threshold (defaults to 5) */
@@ -36,5 +36,3 @@ function onMouseLeave(callback, threshold = 5) {
         select[i].addEventListener("blur", listenerController("add"), false);
     }
 }
-
-module.exports = onMouseLeave

@@ -1,5 +1,5 @@
 /* Function to set a cookie. Default expiration date is 30 days. */
-function set(cname, cvalue, exdays = 30) {
+export function set(cname, cvalue, exdays = 30) {
 	let d = new Date();
 	/* Change this value to change the expiration date. The value is an integer of days */
 	d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -8,7 +8,7 @@ function set(cname, cvalue, exdays = 30) {
 }
 
 /* function to retrieve a cookie value */
-function get(cname = false) {
+export function get(cname = false) {
 	if (cname != false) {
 		let name = cname + "=";
 		let decodedCookie = decodeURIComponent(document.cookie);
@@ -27,7 +27,7 @@ function get(cname = false) {
 }
 
 /* Function to check a cookie exists */
-function exists(cookieName = false) {
+export function exists(cookieName = false) {
 	/* If cookieName is not false and exists */
 	if (!!cookieName) {
 		/* Return result of getCookie not equal to an empty string */
@@ -36,7 +36,7 @@ function exists(cookieName = false) {
 	return false
 }
 
-module.exports = {
+export default {
 	set,
 	get,
 	exists,

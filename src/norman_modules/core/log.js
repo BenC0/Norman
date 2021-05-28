@@ -1,4 +1,4 @@
-function log(testID, msg) {
+export default function log(testID, msg) {
 	let date = new Date
 	window.norman[testID].logs.push({
 		"msg": msg,
@@ -7,5 +7,3 @@ function log(testID, msg) {
 		"date": date.toDateString()
 	})
 }
-
-module.exports = log

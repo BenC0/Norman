@@ -1,4 +1,4 @@
-function registerTest(testID, variant, extraDetails) {
+export default function registerTest(testID, variant, extraDetails) {
 	window.norman = window.norman || {
 		isPDP: isPDP(),
 		isPLP: isPLP(),
@@ -14,5 +14,3 @@ function registerTest(testID, variant, extraDetails) {
 		window.norman[testID][property] = extraDetails[property]
 	}
 }
-
-module.exports = registerTest

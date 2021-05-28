@@ -1,4 +1,4 @@
-function getHighestZIndex(elem = "*") {
+export default function getHighestZIndex(elem = "*") {
   var elems = document.getElementsByTagName(elem);
   var highest = Number.MIN_SAFE_INTEGER || -(Math.pow(2, 53) - 1);
   for (var i = 0; i < elems.length; i++)
@@ -14,5 +14,3 @@ function getHighestZIndex(elem = "*") {
   }
   return highest;
 }
-
-module.exports = getHighestZIndex

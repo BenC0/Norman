@@ -1,4 +1,4 @@
-function watchForChange(
+export default function watchForChange(
 		targetNode = null,
 		callback = (mutationsList, observer) => { console.log(mutationsList, observer) },
 		config = { attributes: true, childList: true, subtree: true },
@@ -11,5 +11,3 @@ function watchForChange(
 		}
 	}
 }
-
-module.exports = watchForChange
