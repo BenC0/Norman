@@ -4,8 +4,9 @@
   "description": "Optimisation Development Toolkit",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "npm run build & node ./tests/test.js",
-    "build": "babel src -d dist"
+    "test": "node ./tests/test.js",
+    "build": "babel src -d dist",
+    "rollup": "rollup ./src/index.js --file ./dist/index.js --format cjs"
   },
   "repository": {
     "type": "git",

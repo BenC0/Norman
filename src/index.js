@@ -10,7 +10,7 @@ import onMouseLeave from './norman_modules/utils/onMouseLeave.js';
 import watchForChange from './norman_modules/utils/watchForChange.js';
 import getHighestZIndex from './norman_modules/utils/getHighestZIndex.js';
 
-export default {
+export {
 	log,
 	poll,
 	cookie,
