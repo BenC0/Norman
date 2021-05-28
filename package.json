@@ -4,7 +4,8 @@
   "description": "Optimisation Development Toolkit",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "node ./src/test.js"
+    "test": "node ./src/test.js",
+    "start": "webpack"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
     "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.2",
     "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.0"
   }
