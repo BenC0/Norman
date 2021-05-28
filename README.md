@@ -2,33 +2,32 @@
 
 **Please note:** This is under active development and is likely to contain many bugs.
 
-## Acronyms & Abbreviations
-- **N**: Norman
-- **DL**: Data Layer
-- **CRO**: Conversion Rate Optimisation
-- **GA**: Google Analytics
-- **GTM**: Google Tag Manager
+## Aim
+Norman will act as a facilitator for optmisation activity.
+Codebase will be vanilla JS with no/minimal dependencies.
+Functionality should be modular to allow the developer to use only what they need.
 
-## Aim/Purpose
-N will act as a facilitator for optmisation activity.
-
-## Codebase
-Vanilla JS, no/minimal dependencies
-
-### TODO: Core Functions
-1. ~~Polling~~
+### Core Functions
+1. Polling
 2. Element management
-3. ~~Test specific logging~~
-4. ~~Cookie management~~
+3. Test specific logging
+4. Cookie management
 
-### TODO: Utility Functions
-1. ~~Debounce~~
-2. ~~Get highest z-index on page~~
-3. ~~Element is in viewport~~
-4. ~~On mouse leave~~
-5. ~~Watch element for change~~
+### Utility Functions
+1. Debounce
+2. Get highest z-index on page
+3. Element is in viewport
+4. On mouse leave
+5. Watch element for change
 
-### TODO: General
-1. Document all functions
-2. Document recommended usage
-3. Investigate bundling methods
+### TODO
+1. Implement Testing (Jest)
+2. Implement Element Management
+- Create functions for get, check, add, remove
+- Create element management system
+3. Implement Test configuration
+- Test ID
+- Variant
+- Code version
+4. Document all functions
+5. Document recommended usage
