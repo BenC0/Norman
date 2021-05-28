@@ -1,3 +1,5 @@
+"use strict";
+
 function registerTest(testID, variant, extraDetails) {
   window.norman = window.norman || {
     isPDP: isPDP(),
@@ -7,11 +9,11 @@ function registerTest(testID, variant, extraDetails) {
   };
   window.norman[testID] = {
     logs: [],
-    variant,
-    testID
+    variant: variant,
+    testID: testID
   };
 
-  for (const property in extraDetails) {
+  for (var property in extraDetails) {
     window.norman[testID][property] = extraDetails[property];
   }
 }

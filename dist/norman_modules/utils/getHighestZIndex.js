@@ -1,4 +1,7 @@
-function getHighestZIndex(elem = "*") {
+"use strict";
+
+function getHighestZIndex() {
+  var elem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "*";
   var elems = document.getElementsByTagName(elem);
   var highest = Number.MIN_SAFE_INTEGER || -(Math.pow(2, 53) - 1);
 

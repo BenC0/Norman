@@ -1,2 +1,2 @@
-const norman = require('../src/index.js')
+const norman = require('../dist/index.js')
 console.log({norman})

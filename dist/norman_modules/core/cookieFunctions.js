@@ -1,23 +1,28 @@
+"use strict";
+
 /* Function to set a cookie. Default expiration date is 30 days. */
-function set(cname, cvalue, exdays = 30) {
-  let d = new Date();
+function set(cname, cvalue) {
+  var exdays = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 30;
+  var d = new Date();
   /* Change this value to change the expiration date. The value is an integer of days */
 
   d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-  let expires = "expires=" + d.toUTCString();
+  var expires = "expires=" + d.toUTCString();
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 /* function to retrieve a cookie value */
 
 
-function get(cname = false) {
-  if (cname != false) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
+function get() {
+  var cname = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
+  if (cname != false) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
 
       while (c.charAt(0) == ' ') {
         c = c.substring(1);
@@ -34,7 +39,9 @@ function get(cname = false) {
 /* Function to check a cookie exists */
 
 
-function exists(cookieName = false) {
+function exists() {
+  var cookieName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
   /* If cookieName is not false and exists */
   if (!!cookieName) {
     /* Return result of getCookie not equal to an empty string */
@@ -45,7 +52,7 @@ function exists(cookieName = false) {
 }
 
 module.exports = {
-  set,
-  get,
-  exists
+  set: set,
+  get: get,
+  exists: exists
 };
