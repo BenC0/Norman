@@ -1,16 +1,16 @@
 export default function registerTest(testID, variant, extraDetails) {
-	window.norman = window.norman || {
-		isPDP: isPDP(),
-		isPLP: isPLP(),
-		isHome: isHome(),
-		pageType: pageType(),
-	}
-	window.norman[testID] =  {
-		logs: [],
+	let testConfig = {
 		variant,
-		testID,
+		id: testID,
 	}
 	for (const property in extraDetails) {
-		window.norman[testID][property] = extraDetails[property]
+		testConfig[property] = extraDetails[property]
 	}
+	window.norman = window.norman || []
+	window.norman[testID] = {
+		logs: [],
+		testConfig,
+	}
+
+	return window.norman[testID]
 }
