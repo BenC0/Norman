@@ -24,8 +24,7 @@ Functionality should be modular to allow the developer to use only what they nee
 1. Implement bundling
 2. Implement testing (Jest)
 3. Implement element management
-- Create functions for get, check, add, remove
-- Create element management system
+- ~~Create functions for get, check, add, remove~~
 4. Implement test configuration
 - Test ID
 - Variant
