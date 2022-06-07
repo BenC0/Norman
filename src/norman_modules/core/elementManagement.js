@@ -24,7 +24,7 @@ export function add(html, target, method) {
     template.innerHTML = html;
     let tempEl = template.content.firstChild;
 	let targetEl = document.querySelector(target)
-	return targetEl.insertAdjacentElement("beforebegin", tempEl)
+	return targetEl.insertAdjacentElement(method, tempEl)
 }
 
 export function remove(input) {
