@@ -21,13 +21,8 @@ export default class TestElement {
 
     init_node(selector) {
         this.selector = selector
-        this.get()
-        this.html = this.html()
-    }
-
-    get() {
-        this.node = document.querySelector(this.selector)
-        return this.node
+        this._get()
+        this.html = this._html()
     }
 
     get_node_path() {
@@ -60,6 +55,10 @@ export default class TestElement {
     /*===================================
         Helper functions
     ===================================*/
+    _get() {
+        this.node = document.querySelector(this.selector)
+        return this.node
+    }
 
     /**
      * insert
