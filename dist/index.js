@@ -2,14 +2,20 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function log(testID, msg) {
+function nLog(testID, event) {
+  var warn = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
   var date = new Date();
-  window.norman[testID].logs.push({
-    "msg": msg,
+  var eventObject = {
+    "event": event,
     "id": "".concat(testID, ":").concat(window.norman[testID].logs.length),
     "time": date.toTimeString(),
     "date": date.toDateString()
-  });
+  };
+  window.norman[testID].logs.push(eventObject);
+
+  if (warn) {
+    console.warn(eventObject);
+  }
 }
 
 /**
@@ -22,6 +28,7 @@ function log(testID, msg) {
 function poll(tfn, cb) {
   var pollInterval = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 5;
   var pollLimit = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 10;
+  var fallback = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
   var x = 0;
 
   var timeout = function timeout() {
@@ -30,11 +37,14 @@ function poll(tfn, cb) {
 
   var doPoll = function doPoll() {
     var r = tfn();
+    x++;
 
     if (r) {
       cb();
-    } else if (!r && x++ < pollLimit) {
+    } else if (!r && x < pollLimit) {
       timeout();
+    } else if (!!fallback && !r && x >= pollLimit) {
+      fallback();
     }
   };
 
@@ -113,6 +123,107 @@ function registerTest(testID, variant, extraDetails) {
   return window.norman[testID];
 }
 
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) _setPrototypeOf(subClass, superClass);
+}
+
+function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+function _isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === "function") return true;
+
+  try {
+    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (typeof call === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return _assertThisInitialized(self);
+}
+
+function _createSuper(Derived) {
+  var hasNativeReflectConstruct = _isNativeReflectConstruct();
+
+  return function _createSuperInternal() {
+    var Super = _getPrototypeOf(Derived),
+        result;
+
+    if (hasNativeReflectConstruct) {
+      var NewTarget = _getPrototypeOf(this).constructor;
+
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return _possibleConstructorReturn(this, result);
+  };
+}
+
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
@@ -174,7 +285,7 @@ function add(html, target, method) {
   template.innerHTML = html;
   var tempEl = template.content.firstChild;
   var targetEl = document.querySelector(target);
-  return targetEl.insertAdjacentElement("beforebegin", tempEl);
+  return targetEl.insertAdjacentElement(method, tempEl);
 }
 function remove(input) {
   // Remove element
@@ -298,12 +409,142 @@ function getHighestZIndex() {
   return highest;
 }
 
+var Test = /*#__PURE__*/function () {
+  function Test() {
+    var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+    var google_analytics = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    var hotjar = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+    _classCallCheck(this, Test);
+
+    // Test ID
+    this.id = id; // Tracking properties
+
+    this.hotjar = hotjar;
+    this.google_analytics = google_analytics;
+    this.body_class = "".concat(this.id, "_loaded");
+    this.register_test();
+  }
+
+  _createClass(Test, [{
+    key: "register_test",
+    value: function register_test() {
+      window.norman = window.norman || [];
+      window.norman[this.id] = window.norman[this.id] || {
+        logs: []
+      };
+    }
+  }]);
+
+  return Test;
+}();
+
+var Variant = /*#__PURE__*/function (_Test) {
+  _inherits(Variant, _Test);
+
+  var _super = _createSuper(Variant);
+
+  function Variant() {
+    var _this;
+
+    var test_config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+      id: "",
+      google_analytics: false,
+      hotjar: false
+    };
+    var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Variant";
+    var conditions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    var actions = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+    var fallback = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+
+    _classCallCheck(this, Variant);
+
+    _this = _super.call(this, test_config.id, test_config.google_analytics, test_config.hotjar);
+    _this.name = name, _this.conditions = conditions;
+    _this.actions = actions || _this.default_action;
+    _this.fallback = fallback || _this.default_fallback;
+    return _this;
+  }
+
+  _createClass(Variant, [{
+    key: "default_action",
+    value: function default_action() {
+      this.log("No action specified", true);
+    }
+  }, {
+    key: "default_fallback",
+    value: function default_fallback() {
+      this.log("No fallback specified", true);
+    }
+  }, {
+    key: "log",
+    value: function log(msg) {
+      var warn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      nLog(this.id, msg, warn);
+    }
+  }, {
+    key: "run",
+    value: function run() {
+      var _this2 = this;
+
+      poll(function (_) {
+        return _this2.conditions() && !document.body.classList.contains(_this2.body_class);
+      }, function (_) {
+        document.body.classList.add(_this2.body_class);
+
+        _this2.track_impression();
+
+        _this2.actions();
+      }, 5, 10, function (_) {
+        _this2.fallback();
+      });
+    }
+  }, {
+    key: "track_impression",
+    value: function track_impression() {
+      if (typeof this.google_analytics === "number") {
+        var eventObject = {
+          'event': 'CRO_Test_Impression',
+          'testID': this.id,
+          'dimension': this.google_analytics,
+          'variation': this.name
+        };
+        this.track_event_object(eventObject);
+      }
+    }
+  }, {
+    key: "track_event",
+    value: function track_event(action) {
+      var eventObject = {
+        'event': 'CRO_Test_Event',
+        'eventAction': "".concat(action),
+        'eventLabel': "".concat(this.id, "-").concat(this.name)
+      };
+      this.track_event_object(eventObject);
+    }
+  }, {
+    key: "track_event_object",
+    value: function track_event_object(eventObject) {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(eventObject);
+      this.log({
+        msg: "Tracked Event Object",
+        eventObject: eventObject
+      });
+    }
+  }]);
+
+  return Variant;
+}(Test);
+
+exports.Test = Test;
+exports.Variant = Variant;
 exports.cookie = cookieFunctions;
 exports.debounce = debounce;
 exports.elementManagement = elementManagement;
 exports.getHighestZIndex = getHighestZIndex;
 exports.isInViewport = isInViewport;
-exports.log = log;
+exports.nLog = nLog;
 exports.onMouseLeave = onMouseLeave;
 exports.poll = poll;
 exports.registerTest = registerTest;

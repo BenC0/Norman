@@ -1,5 +1,5 @@
 // Core Modules
-import log from './norman_modules/core/log.js';
+import nLog from './norman_modules/core/nLog.js';
 import poll from './norman_modules/core/pollFunction.js';
 import cookie from './norman_modules/core/cookieFunctions.js';
 import registerTest from './norman_modules/core/registerTest.js';
@@ -11,8 +11,15 @@ import onMouseLeave from './norman_modules/utils/onMouseLeave.js';
 import watchForChange from './norman_modules/utils/watchForChange.js';
 import getHighestZIndex from './norman_modules/utils/getHighestZIndex.js';
 
+import Test from "./Test/index"
+import Variant from "./Variant/index"
+
 export {
-	log,
+	// Classes
+	Test,
+	Variant,
+	// Functions
+	nLog,
 	poll,
 	cookie,
 	debounce,
