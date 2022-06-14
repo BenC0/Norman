@@ -537,7 +537,147 @@ var Variant = /*#__PURE__*/function (_Test) {
   return Variant;
 }(Test);
 
+var TestElement = /*#__PURE__*/function () {
+  function TestElement(selector) {
+    _classCallCheck(this, TestElement);
+
+    this.selector = selector; // Handle HTML strings
+
+    if (typeof selector === "string") {
+      if (selector[0] === "<" && selector[selector.length - 1] === ">" && selector.length >= 3) {
+        // selector is a HTML string
+        this.html = selector;
+        this.selector = null;
+      } else {
+        this.init_node(selector);
+      }
+    } else {
+      this.selector = null;
+    }
+  }
+
+  _createClass(TestElement, [{
+    key: "init_node",
+    value: function init_node(selector) {
+      this.selector = selector;
+      this.get();
+      this.html = this.html();
+    }
+  }, {
+    key: "get",
+    value: function get() {
+      this.node = document.querySelector(this.selector);
+      return this.node;
+    }
+  }, {
+    key: "get_node_path",
+    value: function get_node_path() {
+      if (!(this.node instanceof Element)) {
+        return;
+      }
+
+      var el = this.node;
+      var path = [];
+
+      while (el.nodeType === Node.ELEMENT_NODE) {
+        var selector = el.nodeName.toLowerCase();
+
+        if (el.id) {
+          selector += '#' + el.id;
+          path.unshift(selector);
+          break;
+        } else {
+          var sib = el,
+              nth = 1;
+
+          while (sib = sib.previousElementSibling) {
+            if (sib.nodeName.toLowerCase() == selector) nth++;
+          }
+
+          if (nth != 1) selector += ":nth-of-type(" + nth + ")";
+        }
+
+        path.unshift(selector);
+        el = el.parentNode;
+      }
+
+      return path.join(" > ");
+    }
+    /*===================================
+        Helper functions
+    ===================================*/
+
+    /**
+     * insert
+     * @param {string} target - A CSS selector for the target element 
+     * @param {("beforeBegin"|"beforeEnd"|"afterBegin"|"afterEnd")} [method="beforeEnd"] - the method for inserting an element via `insertAdjacentElement`
+     */
+
+  }, {
+    key: "insert",
+    value: function insert(target) {
+      var method = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "beforeEnd";
+      var template = document.createElement('template');
+      template.innerHTML = this.html;
+      var tempEl = template.content.firstChild;
+      var targetEl = document.querySelector(target);
+      this.node = targetEl.insertAdjacentElement(method, tempEl);
+      this.selector = this.get_node_path();
+      return this.node;
+    }
+    /**
+     * _text
+     * If str param specified, textContent will be updated, if it is ommited, textContent is not changed.
+     * @param {string} [str=""] - The text string to change textContent to, if specified.  
+     * @returns node textContent
+     */
+
+  }, {
+    key: "_text",
+    value: function _text() {
+      var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+
+      if (str.length != 0) {
+        this.node.textContent = str;
+      }
+
+      return this.node.textContent;
+    }
+    /**
+     * _html
+     * If str param specified, htmlContent will be updated, if it is ommited, htmlContent is not changed.
+     * @param {string} [str=""] - The html string to change htmlContent to, if specified.  
+     * @param {boolean} [innerHTML=false] - if `true`, innerHTML is user, else, outerHTML.  
+     * @returns node innerHTML or outerHTML
+     */
+
+  }, {
+    key: "_html",
+    value: function _html() {
+      var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+      var innerHTML = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+      if (str.length != 0) {
+        if (innerHTML) {
+          this.node.innerHTML = str;
+        } else {
+          this.node.outerHTML = str;
+        }
+      }
+
+      if (innerHTML) {
+        return this.node.innerHTML;
+      } else {
+        return this.node.outerHTML;
+      }
+    }
+  }]);
+
+  return TestElement;
+}();
+
 exports.Test = Test;
+exports.TestElement = TestElement;
 exports.Variant = Variant;
 exports.cookie = cookieFunctions;
 exports.debounce = debounce;
