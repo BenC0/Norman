@@ -40,6 +40,7 @@
     "postcss-nesting": "^10.1.8",
     "postcss-partial-import": "^4.1.0",
     "rollup": "^2.50.3",
+    "rollup-plugin-postcss": "^4.0.2",
     "style-loader": "^3.3.1",
     "svg-inline-loader": "^0.8.2",
     "webpack": "^5.73.0",

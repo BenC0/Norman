@@ -1,0 +1,33 @@
+.nMask_container {
+	position: relative;
+
+    & .nMask {
+        overflow: hidden;
+        background: #ededed;
+
+        &,
+        &::after {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 123456789;
+            position: absolute;
+        }
+
+        &::after {
+            content: "";
+            background: linear-gradient(90deg, transparent, #dcdcdc, transparent);
+            animation: nMask_glimmer 1s infinite;
+        }
+    }
+}
+
+@keyframes nMask_glimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}

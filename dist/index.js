@@ -123,6 +123,22 @@ function registerTest(testID, variant, extraDetails) {
   return window.norman[testID];
 }
 
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -500,17 +516,43 @@ var Variant = /*#__PURE__*/function (_Test) {
       });
     }
   }, {
+    key: "track_event_ga4",
+    value: function track_event_ga4(action) {
+      var eventObject = {
+        'event': 'optimisation_test',
+        'optimisation_id': this.id,
+        'optimisation_variant': this.name,
+        'optimisation_event': action
+      };
+      this.track_event_object(eventObject);
+    }
+  }, {
     key: "track_impression",
     value: function track_impression() {
       if (typeof this.google_analytics === "number") {
         var eventObject = {
           'event': 'CRO_Test_Impression',
-          'testID': this.id,
           'dimension': this.google_analytics,
+          'testID': this.id,
           'variation': this.name
         };
         this.track_event_object(eventObject);
+        this.track_event_ga4("Impression");
       }
+
+      this.track_content_square();
+    }
+  }, {
+    key: "track_content_square",
+    value: function track_content_square() {
+      var csTypeVendorPrefix = "AB_ABT_";
+      var csKey = csTypeVendorPrefix + this.id;
+      window._uxa = window._uxa || [];
+
+      _uxa.push(["trackDynamicVariable", {
+        key: csKey,
+        value: this.name
+      }]);
     }
   }, {
     key: "track_event",
@@ -521,6 +563,7 @@ var Variant = /*#__PURE__*/function (_Test) {
         'eventLabel': "".concat(this.id, "-").concat(this.name)
       };
       this.track_event_object(eventObject);
+      this.track_event_ga4(action);
     }
   }, {
     key: "track_event_object",
@@ -537,6 +580,79 @@ var Variant = /*#__PURE__*/function (_Test) {
   return Variant;
 }(Test);
 
+var TestElements = /*#__PURE__*/function () {
+  function TestElements(selector) {
+    _classCallCheck(this, TestElements);
+
+    if (typeof selector === "string") {
+      this.selector = selector; // Handle HTML strings
+
+      this._get();
+    }
+  }
+  /*===================================
+      Helper functions
+  ===================================*/
+
+
+  _createClass(TestElements, [{
+    key: "_get",
+    value: function _get() {
+      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -1;
+      this.nodes = _toConsumableArray(document.querySelectorAll(this.selector)).map(function (a) {
+        return new TestElement(a);
+      });
+
+      if (n == -1) {
+        return this.nodes;
+      } else {
+        return this.nodes[n];
+      }
+    }
+  }, {
+    key: "_loop",
+    value: function _loop(func) {
+      this.nodes.forEach(function (node, index) {
+        return func(node, index);
+      });
+    }
+  }]);
+
+  return TestElements;
+}();
+
+function styleInject(css, ref) {
+  if (ref === void 0) ref = {};
+  var insertAt = ref.insertAt;
+
+  if (!css || typeof document === 'undefined') {
+    return;
+  }
+
+  var head = document.head || document.getElementsByTagName('head')[0];
+  var style = document.createElement('style');
+  style.type = 'text/css';
+
+  if (insertAt === 'top') {
+    if (head.firstChild) {
+      head.insertBefore(style, head.firstChild);
+    } else {
+      head.appendChild(style);
+    }
+  } else {
+    head.appendChild(style);
+  }
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var css_248z = ".nMask_container{position:relative}.nMask_container .nMask{background:#ededed;overflow:hidden}.nMask_container .nMask,.nMask_container .nMask:after{bottom:0;left:0;position:absolute;right:0;top:0;z-index:123456789}.nMask_container .nMask:after{-webkit-animation:nMask_glimmer 1s infinite;animation:nMask_glimmer 1s infinite;background:linear-gradient(90deg,transparent,#dcdcdc,transparent);content:\"\"}@-webkit-keyframes nMask_glimmer{0%{transform:translateX(-100%)}to{transform:translateX(100%)}}@keyframes nMask_glimmer{0%{transform:translateX(-100%)}to{transform:translateX(100%)}}";
+styleInject(css_248z);
+
 var TestElement = /*#__PURE__*/function () {
   function TestElement(selector) {
     _classCallCheck(this, TestElement);
@@ -549,27 +665,25 @@ var TestElement = /*#__PURE__*/function () {
         this.html = selector;
         this.selector = null;
       } else {
-        this.init_node(selector);
+        this.selector = selector;
+
+        this._get();
+
+        this.html = this._html();
       }
+    } else if (selector instanceof HTMLElement) {
+      this.node = selector;
+      this.html = this._html();
     } else {
-      this.selector = null;
+      console.warn({
+        msg: "Unknown selector variable type detected",
+        selector: selector,
+        type: _typeof(selector)
+      });
     }
   }
 
   _createClass(TestElement, [{
-    key: "init_node",
-    value: function init_node(selector) {
-      this.selector = selector;
-      this.get();
-      this.html = this.html();
-    }
-  }, {
-    key: "get",
-    value: function get() {
-      this.node = document.querySelector(this.selector);
-      return this.node;
-    }
-  }, {
     key: "get_node_path",
     value: function get_node_path() {
       if (!(this.node instanceof Element)) {
@@ -607,6 +721,19 @@ var TestElement = /*#__PURE__*/function () {
         Helper functions
     ===================================*/
 
+  }, {
+    key: "_get",
+    value: function _get() {
+      this.node = document.querySelector(this.selector);
+      return this.node;
+    }
+  }, {
+    key: "_find",
+    value: function _find(selector) {
+      return _toConsumableArray(document.querySelectorAll(selector)).map(function (a) {
+        return new TestElement(a);
+      });
+    }
     /**
      * insert
      * @param {string} target - A CSS selector for the target element 
@@ -614,8 +741,8 @@ var TestElement = /*#__PURE__*/function () {
      */
 
   }, {
-    key: "insert",
-    value: function insert(target) {
+    key: "_insert",
+    value: function _insert(target) {
       var method = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "beforeEnd";
       var template = document.createElement('template');
       template.innerHTML = this.html;
@@ -624,6 +751,15 @@ var TestElement = /*#__PURE__*/function () {
       this.node = targetEl.insertAdjacentElement(method, tempEl);
       this.selector = this.get_node_path();
       return this.node;
+    }
+  }, {
+    key: "_append",
+    value: function _append(element) {
+      var template = document.createElement('template');
+      template.innerHTML = element;
+      var tempEl = template.content.firstChild;
+      var targetEl = this.node;
+      return targetEl.insertAdjacentElement("beforeEnd", tempEl);
     }
     /**
      * _text
@@ -671,6 +807,39 @@ var TestElement = /*#__PURE__*/function () {
         return this.node.outerHTML;
       }
     }
+  }, {
+    key: "_class",
+    value: function _class() {
+      var cls = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+      var add = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+      if (cls.length != 0) {
+        if (add) {
+          this.node.classList.add(cls);
+        } else {
+          this.node.classList.remove(cls);
+        }
+      } else {
+        return this.node.classList;
+      }
+    }
+  }, {
+    key: "_mask",
+    value: function _mask() {
+      var apply = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+      if (apply) {
+        this._class("nMask_container");
+
+        this._append("<div class=\"nMask\"></div>");
+      } else {
+        this._class("nMask_container", false);
+
+        this._find(".nMask").forEach(function (el) {
+          return el.node.remove();
+        });
+      }
+    }
   }]);
 
   return TestElement;
@@ -678,6 +847,7 @@ var TestElement = /*#__PURE__*/function () {
 
 exports.Test = Test;
 exports.TestElement = TestElement;
+exports.TestElements = TestElements;
 exports.Variant = Variant;
 exports.cookie = cookieFunctions;
 exports.debounce = debounce;

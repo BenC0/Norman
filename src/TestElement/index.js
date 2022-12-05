@@ -1,3 +1,6 @@
+import TestElements from "../TestElements/index"
+import "./mask.css"
+
 export default class TestElement {
     constructor(selector) {
         this.selector = selector
@@ -12,17 +15,16 @@ export default class TestElement {
                 this.html = selector
                 this.selector = null
             } else {
-                this.init_node(selector)
+                this.selector = selector
+                this._get()
+                this.html = this._html()
             }
+        } else if (selector instanceof HTMLElement) {
+            this.node = selector
+            this.html = this._html()
         } else {
-            this.selector = null
+            console.warn({msg: "Unknown selector variable type detected", selector, type: typeof selector})
         }
-    }
-
-    init_node(selector) {
-        this.selector = selector
-        this._get()
-        this.html = this._html()
     }
 
     get_node_path() {
@@ -60,6 +62,10 @@ export default class TestElement {
         return this.node
     }
 
+    _find(selector) {
+        return [...document.querySelectorAll(selector)].map(a => new TestElement(a))
+    }
+
     /**
      * insert
      * @param {string} target - A CSS selector for the target element 
@@ -74,6 +80,14 @@ export default class TestElement {
         this.node = targetEl.insertAdjacentElement(method, tempEl)
         this.selector = this.get_node_path()
         return this.node
+    }
+
+    _append(element) {
+        let template = document.createElement('template');
+        template.innerHTML = element;
+        let tempEl = template.content.firstChild;
+        let targetEl = this.node
+        return targetEl.insertAdjacentElement("beforeEnd", tempEl)
     }
 
     /**
@@ -108,6 +122,28 @@ export default class TestElement {
             return this.node.innerHTML
         } else {
             return this.node.outerHTML
+        }
+    }
+
+    _class(cls = "", add = true) {
+        if(cls.length != 0) {
+            if(add) {
+                this.node.classList.add(cls)
+            } else {
+                this.node.classList.remove(cls)
+            }
+        } else {
+            return this.node.classList
+        }
+    }
+
+    _mask(apply = true) {
+        if (apply) {
+            this._class("nMask_container")
+            this._append(`<div class="nMask"></div>`)
+        } else {
+            this._class("nMask_container", false)
+            this._find(".nMask").forEach(el => el.node.remove())
         }
     }
 }

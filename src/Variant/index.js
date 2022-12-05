@@ -15,7 +15,7 @@ export default class Variant extends Test {
         fallback = null,
     ) {
         super(test_config.id, test_config.google_analytics, test_config.hotjar)
-        this.name = name,
+        this.name = name, 
         this.conditions = conditions
         this.actions = actions || this.default_action
         this.fallback = fallback || this.default_fallback
@@ -45,16 +45,43 @@ export default class Variant extends Test {
         })
 	}
 
+    track_event_ga4(action) {
+        let eventObject = {
+            'event': 'optimisation_test',
+            'optimisation_id': this.id,
+            'optimisation_variant': this.name,
+			'optimisation_event': action
+        }
+        this.track_event_object(eventObject)
+    }
+
     track_impression() {
         if (typeof this.google_analytics === "number") {
             let eventObject = {
                 'event': 'CRO_Test_Impression',
-                'testID': this.id,
                 'dimension': this.google_analytics,
+
+                'testID': this.id,
                 'variation': this.name,
+
             }
             this.track_event_object(eventObject)
+            this.track_event_ga4("Impression")
         }
+        this.track_content_square()
+    }
+
+    track_content_square() {
+        var csTypeVendorPrefix = "AB_ABT_";
+        var csKey = csTypeVendorPrefix + this.id;
+        window._uxa = window._uxa || []
+        _uxa.push([
+            "trackDynamicVariable",
+            {
+                key: csKey,
+                value: this.name,
+            },
+        ]);
     }
     
     track_event(action) {
@@ -64,6 +91,7 @@ export default class Variant extends Test {
 			'eventLabel': `${this.id}-${this.name}`,
 		}
         this.track_event_object(eventObject)
+        this.track_event_ga4(action)
     }
 
     track_event_object(eventObject) {

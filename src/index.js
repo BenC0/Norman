@@ -14,12 +14,14 @@ import getHighestZIndex from './norman_modules/utils/getHighestZIndex.js';
 import Test from "./Test/index"
 import Variant from "./Variant/index"
 import TestElement from "./TestElement/index"
+import TestElements from "./TestElements/index"
 
 export {
 	// Classes
 	Test,
 	Variant,
 	TestElement,
+	TestElements,
 	// Functions
 	nLog,
 	poll,
